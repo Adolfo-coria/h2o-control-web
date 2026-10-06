@@ -1,0 +1,84 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<x-app-layout>
+    <div class="py-12 bg-sky-200/70 min-h-screen">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="mb-6">
+                <h2 class="font-extrabold text-3xl text-blue-950 leading-tight">Registrar Nuevo Balance</h2>
+                <p class="text-sm text-sky-900 mt-1 font-bold">Ingresa los movimientos financieros del mes.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl border border-sky-100 p-8">
+                <!-- 🟢 Se agregó enctype="multipart/form-data" para permitir subida de archivos -->
+                <form action="{{ route('finanzas.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                    @csrf
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Mes -->
+                        <div>
+                            <label class="block text-sm font-extrabold text-blue-950 mb-2">Mes</label>
+                            <select name="mes" required class="w-full rounded-xl border border-sky-200 px-4 py-3 focus:ring-2 focus:ring-blue-500 font-bold text-blue-900 bg-sky-50">
+                                <option value="" disabled selected>Selecciona un mes</option>
+                                <option value="Enero">Enero</option>
+                                <option value="Febrero">Febrero</option>
+                                <option value="Marzo">Marzo</option>
+                                <option value="Abril">Abril</option>
+                                <option value="Mayo">Mayo</option>
+                                <option value="Junio">Junio</option>
+                                <option value="Julio">Julio</option>
+                                <option value="Agosto">Agosto</option>
+                                <option value="Septiembre">Septiembre</option>
+                                <option value="Octubre">Octubre</option>
+                                <option value="Noviembre">Noviembre</option>
+                                <option value="Diciembre">Diciembre</option>
+                            </select>
+                        </div>
+
+                        <!-- Gestión -->
+                        <div>
+                            <label class="block text-sm font-extrabold text-blue-950 mb-2">Gestión (Año)</label>
+                            <input type="number" name="gestion" required value="{{ date('Y') }}" 
+                                class="w-full rounded-xl border border-sky-200 px-4 py-3 focus:ring-2 focus:ring-blue-500 font-bold text-blue-900 bg-sky-50">
+                        </div>
+
+                        <!-- Ingresos -->
+                        <div>
+                            <label class="block text-sm font-extrabold text-blue-950 mb-2">Total Ingresos (Bs.)</label>
+                            <input type="number" step="0.01" name="ingresos" required min="0" placeholder="Ej: 5000.00"
+                                class="w-full rounded-xl border border-sky-200 px-4 py-3 focus:ring-2 focus:ring-green-500 font-bold text-green-700 bg-sky-50">
+                        </div>
+
+                        <!-- Egresos -->
+                        <div>
+                            <label class="block text-sm font-extrabold text-blue-950 mb-2">Total Egresos/Gastos (Bs.)</label>
+                            <input type="number" step="0.01" name="egresos" required min="0" placeholder="Ej: 1200.50"
+                                class="w-full rounded-xl border border-sky-200 px-4 py-3 focus:ring-2 focus:ring-red-500 font-bold text-red-700 bg-sky-50">
+                        </div>
+                    </div>
+
+                    <!-- Detalle -->
+                    <div>
+                        <label class="block text-sm font-extrabold text-blue-950 mb-2">Detalle de Movimientos (Opcional pero recomendado)</label>
+                        <textarea name="detalle" rows="4" placeholder="Ej: Ingresos por cuotas mensuales. Gastos: Pago de luz áreas comunes y reparación de bomba de agua." 
+                            class="w-full rounded-xl border border-sky-200 px-4 py-3 focus:ring-2 focus:ring-blue-500 font-medium text-blue-900 bg-sky-50"></textarea>
+                    </div>
+
+                    <!-- 🟢 NUEVO CAMPO: Subir Comprobante -->
+                    <div class="mt-4 border-t border-sky-100 pt-4">
+                        <label class="block text-sm font-extrabold text-blue-950 mb-2">Comprobante / Recibo de respaldo (PDF, JPG, PNG)</label>
+                        <input type="file" name="comprobante" accept=".pdf, .jpg, .jpeg, .png"
+                            class="w-full rounded-xl border border-sky-200 px-4 py-3 bg-sky-50 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 transition-all cursor-pointer">
+                        <p class="text-xs text-sky-700 mt-1 font-semibold">Opcional. Tamaño máximo: 5MB.</p>
+                    </div>
+
+                    <div class="flex justify-end space-x-4 pt-6">
+                        <a href="{{ route('finanzas.index') }}" class="px-6 py-3 bg-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-300 transition-colors">Cancelar</a>
+                        <button type="submit" class="px-6 py-3 bg-blue-700 text-white font-extrabold rounded-xl shadow-lg shadow-blue-500/30 hover:bg-blue-800 transition-colors transform hover:-translate-y-0.5">
+                            Guardar Balance
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
